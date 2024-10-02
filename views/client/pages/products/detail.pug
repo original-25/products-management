@@ -1,0 +1,13 @@
+extends ../../layouts/default.pug
+
+block main
+
+    h2(class="btn btn-success") #{item.title}
+
+    p Mô tả: #{item.description}
+
+    p Giá: #{item.price}
+
+    p Giảm giá: #{item.discountPercentage}
+
+    img(src=item.thumbnail, alt="xx" width=200 height=200)
