@@ -132,8 +132,11 @@ module.exports.createPost = async (req, res) => {
     req.body.price = parseInt(req.body.price);
     req.body.discountPercentage = parseInt(req.body.discountPercentage) || undefined;
     req.body.position = parseInt(req.body.position) || undefined;
-    req.body.thumbnail = `/uploads/${req.file.filename}`;
+    // req.body.thumbnail = `/uploads/${req.file.filename}`;
     const countProducts = await Product.countDocuments({});
+
+    console.log('OK 2');
+    
 
     req.body.position = req.body.position || countProducts;
     const newProduct = new Product(req.body);
@@ -160,7 +163,11 @@ module.exports.editPatch = async (req, res) => {
     if (req.body) {
         req.body.price = parseInt(req.body.price);
         req.body.discountPercentage = parseInt(req.body.discountPercentage);
-        req.body.position = parseInt(req.body.position);
+        
+        if(req.position) {
+            req.body.position = parseInt(req.body.position);
+        }
+
         if(req.file) {
             req.body.thumbnail = `/uploads/${req.file.filename}`;
         }
