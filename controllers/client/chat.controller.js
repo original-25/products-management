@@ -9,7 +9,7 @@ module.exports.index = async (req, res) => {
     const userId = res.locals.user.id;
     const fullName = res.locals.user.fullName;
     // SocketIO
-    _io.once('connection', (socket) => {
+    _io.on('connection', (socket) => {
         console.log('a user connected');
         socket.on("client_send_message", async (content) => {
             // Lưu vào database
