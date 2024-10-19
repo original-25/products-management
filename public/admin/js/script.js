@@ -22,6 +22,8 @@ if (buttonStatus.length) {
 
 //Thanh tìm kiếm
 const formSearch = document.querySelector("form");
+console.log('Định mệnh');
+
 if (formSearch) {
     formSearch.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -94,7 +96,6 @@ if (table) {
             item.addEventListener("click", () => {
                 const checkedList = table.querySelectorAll("input[name='id']:checked");
     
-    
                 if (checkedList.length == checkboxList.length) {
                     checkboxAll.checked = true;
                 } else {
@@ -116,8 +117,6 @@ if (table) {
                     return;
                 }
             }
-
-
             if (checkboxList.length > 0) {
                 const ids = [];
 
@@ -134,7 +133,6 @@ if (table) {
                 }
 
                 e.target[1].value = ids.join(", ");
-                console.log(e.target[1].value);
                 formChangeMulti.submit();
             }
         })
@@ -151,3 +149,35 @@ if (alertError) {
     }, parseInt(alertError.getAttribute('time')));
 }
 //END THÔNG BÁO ALERT
+
+//Sort
+
+const sort = document.querySelector("#sort");
+
+if(sort) {
+    sort.addEventListener("change", () => {
+        const url = new URL(window.location.href);
+        const [sortKey, sortValue] = sort.value.split('-')
+        
+        url.searchParams.set("sortKey", sortKey);
+        url.searchParams.set("sortValue", sortValue);
+        window.location.href = url.href;
+    })
+}
+
+//end Sort
+
+const url = new URL(window.location.href);
+
+const sortKey = url.searchParams.get("sortKey");
+const sortValue = url.searchParams.get("sortValue");
+
+if(sortKey&&sortValue) {
+    const str = `[value="${sortKey+ '-' + sortValue}"]`;
+    
+    const itemChecked = document.querySelector(str);
+    console.log(itemChecked);
+    
+    itemChecked.selected = true
+}
+

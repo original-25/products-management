@@ -14,6 +14,22 @@ const productSchema = new mongoose.Schema({
     stock: Number,
     thumbnail: String,
     status: String,
+    categoryID: {
+        type: String,
+        default: ""
+    },
+    createBy : {
+        userId: String,
+        createAt: {
+            type: Date,
+            default: Date.now
+        }
+    },
+
+    deleteBy: {
+        userId: String,
+        deleteAt: Date
+    },
     slug: { 
         type: String, 
         slug: "title",
@@ -23,8 +39,15 @@ const productSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    updateBy: [
+        {
+            userId: String,
+            updateAt: Date
+        }
+    ],
+    stock: Number,
+    isOuStanding: String,
     position: Number,
-    deleteAt: Date
 }, {timestamps: true});
 
 const Product = mongoose.model('Product', productSchema, "products");

@@ -1,13 +1,22 @@
 .header{
     background-color: black;
     padding: 15px 20px;
-    color: white;
-    font-size: 30px;
-    font-weight: 900;
     position: sticky;
     top: 0;
     z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
+.header .logo{
+    padding: 15px 20px;
+    color: white;
+    font-size: 30px;
+    font-weight: 900;
+}
+
+
 
 .body{
     
@@ -181,3 +190,11 @@ table img{
     display: inline-block;
 }
   
+/* body {
+    overflow-x: hidden;
+} */
+
+
+[form-create-products-category] {
+    
+}

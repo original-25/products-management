@@ -1,8 +1,9 @@
 const express = require('express');
+const path = require('path')
 require("dotenv").config();
 const database = require('./config/database');
 var methodOverride = require('method-override');
-
+const { Server } = require("socket.io");
 database.connect();
 
 const app = express()
@@ -11,38 +12,57 @@ const route = require("./routes/client/index.route");
 const routeAdmin = require('./routes/admin/index.route');
 const systemConfig = require('./config/system');
 
+//socketio
+const http = require('http');
+const server = http.createServer(app);
+const io = new Server(server);
+global._io = io;
+//end socketio
+
 const session = require('express-session');
 
 
 var flash = require('express-flash');
 const cookieParser = require('cookie-parser');
- 
+
 app.use(cookieParser('tes1'));
-app.use(session({ cookie: { maxAge: 60000 }}));
+app.use(session({
+    cookie: {
+        maxAge: 60000
+    }
+}));
 app.use(flash());
 
 
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
-
-console.log(systemConfig.prefixAdmin);
-
 
 app.set('views', `${__dirname}/views`);
 app.set('view engine', 'pug')
 app.use(express.static(`${__dirname}/public`));
 app.use(methodOverride('_method'));
 
+//TINY MCE
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+//END TINY MCE
+
 
 app.use(express.json()); // Phân tích JSON
-app.use(express.urlencoded({ extended: true })); // Phân tích URL-encoded
+app.use(express.urlencoded({
+    extended: true
+})); // Phân tích URL-encoded
 
 route(app);
 routeAdmin(app);
 
+app.get('*', (req, res) => {
+    res.render('client/pages/errors/404')
+})
 
-app.listen(port, () => {
+
+server.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
+
 
 
 // [

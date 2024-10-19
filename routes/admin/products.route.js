@@ -5,7 +5,6 @@ const validate = require('../../validates/product.validate');
 // const storage = require("../../helpers/storageMulter")
 const multer = require('multer')
 const upload = multer();
-
 const uploadFile = require('../../middlewares/admin/upload.middleware');
 
 
